@@ -3,7 +3,7 @@ import escapeStringRegexp from 'escape-string-regexp'
 import fs from 'fs'
 import path from 'path'
 import esbuild from 'esbuild'
-import { builtinsPolyfills } from './polyfills'
+import { getModules as builtinsPolyfills } from 'rollup-plugin-polyfill-node/dist/modules'
 
 // import { NodeResolvePlugin } from '@esbuild-plugins/node-resolve'
 const NAME = 'node-modules-polyfills'
@@ -52,7 +52,7 @@ export function NodeModulesPolyfillPlugin(
 
                     const resolved = polyfilledBuiltins.get(
                         removeEndingSlash(args.path),
-                    )
+                    ) as string
                     const contents = await (
                         await fs.promises.readFile(resolved)
                     ).toString()
